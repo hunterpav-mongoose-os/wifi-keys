@@ -5,10 +5,23 @@ load('api_file.js');
 load('api_http.js');
 load('api_rpc.js');
 load('api_log.js');
+load('api_esp8266.js');
 
 // count.dat
 //{"Right":687,"Left":436}
 
+
+// before we are going to sleep
+let sleep_count = 0;
+Timer.set(60000, Timer.REPEAT, function() {
+  sleep_count = sleep_count + 1;
+  if(sleep_count > 10) {
+    ESP8266.deepSleep(1);
+  }
+}, null);
+
+
+// setup blink
 let led = Cfg.get('board.led1.pin');
 GPIO.set_mode(led, GPIO.MODE_OUTPUT);
 
@@ -21,6 +34,8 @@ let init_timer = Timer.set(200, Timer.REPEAT, function() {
   }
 }, null);
 
+
+// setup buttons
 let pin_left = 4;
 let pin_right = 5;
 
@@ -37,6 +52,7 @@ GPIO.set_button_handler(pin_right, GPIO.PULL_UP, GPIO.INT_EDGE_POS, 50, function
 
 let cur_button = '';
 let button = function(btn){
+  sleep_count = 0;
   cur_button = btn;
   HTTP.query({
      url: 'http://192.168.4.1/rpc/'+btn,

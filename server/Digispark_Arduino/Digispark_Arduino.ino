@@ -13,6 +13,15 @@
  */
 
 
+/*
+ * 1. add to “Additional Boards Manager URLs”
+ * http://digistump.com/package_digistump_index.json
+ * 2. “Boards Manager” -> “Contributed”
+ * 3. Digistamp AVR Boards
+ * 4. import lib https://github.com/nadavmatalon/TinyWireS
+ *    https://forum.arduino.cc/index.php?topic=424655.0
+ */
+
 #include "TinyWireS.h"                  // wrapper class for I2C slave routines
 #define I2C_SLAVE_ADDR  0x5            // i2c slave address (38)
 
@@ -59,6 +68,3 @@ void blink(){
     //Set the LED pins to LOW. This turns it off  
     digitalWrite(1, LOW);  
 }
-
-
-

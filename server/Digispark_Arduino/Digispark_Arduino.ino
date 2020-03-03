@@ -14,14 +14,16 @@
 
 
 /*
- * 1. add to “Additional Boards Manager URLs”
- * http://digistump.com/package_digistump_index.json
+ * 1. File -> Preferences -> add to “Additional Boards Manager URLs”
+ *    http://digistump.com/package_digistump_index.json
  * 2. “Boards Manager” -> “Contributed”
- * 3. Digistamp AVR Boards
- * 4. import lib https://github.com/nadavmatalon/TinyWireS
+ *    Digistamp AVR Boards
+ * 3. Sketch -> Include library
+ *    https://github.com/nadavmatalon/TinyWireS
  *    https://forum.arduino.cc/index.php?topic=424655.0
  */
-
+ 
+#include <Arduino.h>
 #include "TinyWireS.h"                  // wrapper class for I2C slave routines
 #define I2C_SLAVE_ADDR  0x5            // i2c slave address (38)
 
@@ -42,7 +44,7 @@ void loop(){
   
   byte byteRcvd = 0;
   if (TinyWireS.available()){           // got I2C input!
-    byteRcvd = TinyWireS.receive();     // get the byte from master
+    byteRcvd = TinyWireS.read();     // get the byte from master
 //    String myString = String(byteRcvd, HEX);
 //    DigiKeyboard.println(myString);
     if (byteRcvd == KEY_LEFT_ARROW) {
